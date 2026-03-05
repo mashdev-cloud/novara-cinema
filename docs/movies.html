@@ -790,7 +790,7 @@
             // Filter by year
             if (year) {
                 filteredMovies = filteredMovies.filter(movie => 
-                    movie.release_year === parseInt(year)
+                    movie.year === parseInt(year)
                 );
             }
 
@@ -798,7 +798,7 @@
             if (search) {
                 filteredMovies = filteredMovies.filter(movie => 
                     movie.title.toLowerCase().includes(search) ||
-                    movie.synopsis.toLowerCase().includes(search) ||
+                    movie.description.toLowerCase().includes(search) ||
                     movie.director.toLowerCase().includes(search)
                 );
             }
@@ -808,7 +808,7 @@
                 if (sort === 'rating') {
                     filteredMovies.sort((a, b) => b.rating - a.rating);
                 } else if (sort === 'year') {
-                    filteredMovies.sort((a, b) => b.release_year - a.release_year);
+                    filteredMovies.sort((a, b) => b.year - a.year);
                 } else if (sort === 'title') {
                     filteredMovies.sort((a, b) => a.title.localeCompare(b.title));
                 }
@@ -882,7 +882,7 @@
                     <div class="movie-info">
                         <h3 class="movie-title">${movie.title}</h3>
                         <div class="movie-meta">
-                            <span class="movie-year">${movie.release_year}</span>
+                            <span class="movie-year">${movie.year}</span>
                             <span class="movie-rating">
                                 <i class="fas fa-star"></i> ${movie.rating}
                             </span>

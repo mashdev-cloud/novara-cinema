@@ -657,8 +657,7 @@
 
             const badges = [];
             if (movie.trending) badges.push('<span class="movie-badge badge-trending">Trending</span>');
-            if (movie.new_release) badges.push('<span class="movie-badge badge-new">New Release</span>');
-            if (movie.featured) badges.push('<span class="movie-badge badge-featured">Featured</span>');
+            if (movie.new) badges.push('<span class="movie-badge badge-new">New Release</span>');
 
             const genres = movie.genre.map(g => 
                 `<span class="movie-genre" onclick="filterByGenre('${g}')">${g}</span>`
@@ -667,7 +666,7 @@
             const director = movie.director || 'Unknown';
             const directorInitials = director.split(' ').map(n => n[0]).join('').substring(0, 2);
 
-            const cast = movie.cast.map((actor, index) => `
+            const cast = movie.stars.map((actor, index) => `
                 <div class="cast-member">
                     <div class="cast-photo">
                         <i class="fas fa-user"></i>
@@ -678,7 +677,7 @@
             `).join('');
 
             // YouTube video ID extraction
-            const videoId = extractVideoId(movie.trailer_url);
+            const videoId = extractVideoId(movie.trailer);
 
             const html = `
                 <!-- Hero Backdrop -->
@@ -714,7 +713,7 @@
                             
                             <p class="movie-tagline">Experience the unforgettable story</p>
                             
-                            <p class="movie-synopsis">${movie.synopsis}</p>
+                            <p class="movie-synopsis">${movie.description}</p>
                             
                             <div class="movie-actions">
                                 <a href="#" class="btn-primary" onclick="playMovie()">
@@ -828,7 +827,7 @@
             if (navigator.share) {
                 navigator.share({
                     title: currentMovie.title,
-                    text: currentMovie.synopsis,
+                    text: currentMovie.description,
                     url: window.location.href
                 });
             } else {
