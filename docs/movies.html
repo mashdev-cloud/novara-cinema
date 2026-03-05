@@ -614,13 +614,13 @@
 <body>
     <!-- Navigation -->
     <nav class="navbar">
-        <a href="hero-landing.html" class="logo">
+        <a href="index.html" class="logo">
             <span class="logo-icon"><i class="fas fa-film"></i></span>
             <span class="logo-text">NOVARA</span>
         </a>
         
         <ul class="nav-links">
-            <li><a href="hero-landing.html">Home</a></li>
+            <li><a href="index.html">Home</a></li>
             <li><a href="movies.html" class="active">Movies</a></li>
             <li><a href="#series">Series</a></li>
             <li><a href="#originals">Originals</a></li>
@@ -643,7 +643,7 @@
             </button>
         </div>
         <div style="display: flex; flex-direction: column; gap: 20px;">
-            <a href="hero-landing.html" style="color: var(--text-light-gray); text-decoration: none; font-size: 1.1rem;">
+            <a href="index.html" style="color: var(--text-light-gray); text-decoration: none; font-size: 1.1rem;">
                 <i class="fas fa-home" style="margin-right: 12px;"></i>Home
             </a>
             <a href="movies.html" style="color: var(--text-white); text-decoration: none; font-size: 1.1rem;">
@@ -865,8 +865,7 @@
         function createMovieCard(movie) {
             const badges = [];
             if (movie.trending) badges.push('<span class="movie-badge badge-trending">Trending</span>');
-            if (movie.new_release) badges.push('<span class="movie-badge badge-new">New</span>');
-            if (movie.featured) badges.push('<span class="movie-badge badge-featured">Featured</span>');
+            if (movie.new) badges.push('<span class="movie-badge badge-new">New</span>');
 
             const genres = movie.genre.slice(0, 2).map(g => `<span class="movie-genre">${g}</span>`).join('');
 
