@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novara - Beyond The Universe Of Movies</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary-red: #e50914;
+            --primary-red-dark: #b20710;
+            --primary-red-light: #ff2a2a;
+            --accent-gold: #ffd700;
+            --dark-bg: #050505;
+            --dark-bg-secondary: #0a0a0f;
+            --dark-bg-tertiary: #12121a;
+            --text-white: #ffffff;
+            --text-gray: #a0a0a0;
+            --text-light-gray: #e5e5e5;
+            --overlay-dark: rgba(0, 0, 0, 0.75);
+            --overlay-gradient: linear-gradient(180deg, rgba(5,5,5,0.3) 0%, rgba(5,5,5,0.95) 100%);
+            --transition-fast: 0.2s ease;
+            --transition-medium: 0.4s ease;
+            --transition-slow: 0.8s ease;
+            --shadow-glow: 0 0 60px rgba(229, 9, 20, 0.5);
+            --shadow-glow-blue: 0 0 60px rgba(59, 130, 246, 0.3);
+        }
+
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ============ NAVIGATION ============ */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 22px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0) 100%);
+            transition: all var(--transition-medium);
+            animation: slideDown 1s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-100%); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .navbar.scrolled {
+            background: rgba(5, 5, 15, 0.98);
+            padding: 15px 60px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            color: var(--text-white);
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            font-size: 2.2rem;
+            color: var(--primary-red);
+            position: relative;
+            animation: logoPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { 
+                transform: scale(1);
+                filter: drop-shadow(0 0 10px var(--primary-red));
+            }
+            50% { 
+                transform: scale(1.1);
+                filter: drop-shadow(0 0 25px var(--primary-red));
+            }
+        }
+
+        .logo-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.4rem;
+            font-weight: 400;
+            letter-spacing: 6px;
+            background: linear-gradient(135deg, var(--text-white) 0%, var(--primary-red-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 45px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-light-gray);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            position: relative;
+            transition: all var(--transition-fast);
+            padding: 8px 0;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--primary-red);
+            transition: all var(--transition-medium);
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover {
+            color: var(--text-white);
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--primary-red);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .search-btn {
+            background: none;
+            border: none;
+            color: var(--text-light-gray);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            padding: 8px;
+        }
+
+        .search-btn:hover {
+            color: var(--primary-red);
+            transform: scale(1.1);
+        }
+
+        .nav-cta {
+            padding: 12px 28px;
+            background: transparent;
+            border: 2px solid var(--primary-red);
+            color: var(--text-white);
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all var(--transition-medium);
+            text-decoration: none;
+        }
+
+        .nav-cta:hover {
+            background: var(--primary-red);
+            box-shadow: var(--shadow-glow);
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-white);
+            font-size: 1.6rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .mobile-menu-btn:hover {
+            color: var(--primary-red);
+        }
+
+        /* ============ HERO SECTION ============ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Background Layer */
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+        }
+
+        .hero-bg-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.35) contrast(1.15) saturate(1.2);
+            animation: bgKenBurns 15s ease-in-out infinite alternate;
+        }
+
+        @keyframes bgKenBurns {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.12); }
+        }
+
+        .hero-bg-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--overlay-gradient);
+        }
+
+        /* Ambient Gradient Orbs */
+        .ambient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: orbFloat 12s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: var(--primary-red);
+            top: -150px;
+            right: -100px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: #1e3a8a;
+            bottom: -100px;
+            left: -100px;
+            animation-delay: -6s;
+        }
+
+        .orb-3 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, #7c3aed, #db2777);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -3s;
+            opacity: 0.2;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -30px) scale(1.05); }
+            50% { transform: translate(-20px, 20px) scale(0.95); }
+            75% { transform: translate(20px, 10px) scale(1.02); }
+        }
+
+        /* Lens Flare Effect */
+        .lens-flare {
+            position: absolute;
+            top: 20%;
+            right: 15%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            animation: lensFlare 8s ease-in-out infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes lensFlare {
+            0%, 100% { 
+                opacity: 0.3;
+                transform: scale(1) rotate(0deg);
+            }
+            50% { 
+                opacity: 0.6;
+                transform: scale(1.2) rotate(180deg);
+            }
+        }
+
+        /* Particle Canvas */
+        #particles-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        /* ============ HERO CONTENT ============ */
+        .hero-content {
+            text-align: center;
+            max-width: 950px;
+            padding: 0 30px;
+            z-index: 10;
+        }
+
+        /* Animated Badge */
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 24px;
+            background: rgba(229, 9, 20, 0.15);
+            border: 1px solid rgba(229, 9, 20, 0.5);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary-red-light);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 35px;
+            animation: fadeInScale 0.8s ease-out 0.2s both;
+            backdrop-filter: blur(5px);
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--primary-red);
+            border-radius: 50%;
+            animation: badgePulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.8) translateY(30px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* Main Title */
+        .hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3rem, 10vw, 6.5rem);
+            font-weight: 400;
+            line-height: 1;
+            letter-spacing: 8px;
+            margin-bottom: 30px;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .hero-title span {
+            display: block;
+        }
+
+        .hero-title-main {
+            background: linear-gradient(135deg, var(--text-white) 0%, var(--text-light-gray) 50%, var(--text-white) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+            filter: drop-shadow(0 4px 20px rgba(0,0,0,0.5));
+        }
+
+        .hero-title-highlight {
+            background: linear-gradient(135deg, var(--primary-red-light) 0%, var(--accent-gold) 50%, var(--primary-red-light) 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientFlow 4s linear infinite;
+            filter: drop-shadow(0 0 30px rgba(229, 9, 20, 0.6));
+        }
+
+        @keyframes gradientFlow {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Subtitle */
+        .hero-subtitle {
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: var(--text-gray);
+            line-height: 1.8;
+            margin-bottom: 50px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+
+        /* CTA Buttons */
+        .hero-cta-group {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+            animation: fadeInUp 0.8s ease-out 0.8s both;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            padding: 18px 45px;
+            background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-red-dark) 100%);
+            border: none;
+            border-radius: 50px;
+            color: var(--text-white);
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all var(--transition-medium);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            box-shadow: 0 10px 40px rgba(229, 9, 20, 0.4);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary i {
+            font-size: 1rem;
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            padding: 18px 45px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            border-radius: 50px;
+            color: var(--text-white);
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all var(--transition-medium);
+            text-decoration: none;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--text-white);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Stats Row */
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 80px;
+            animation: fadeInUp 0.8s ease-out 1s both;
+        }
+
+        .stat-item {
+            text-align: center;
+            position: relative;
+        }
+
+        .stat-item::after {
+            content: '';
+            position: absolute;
+            right: -40px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.2), transparent);
+        }
+
+        .stat-item:last-child::after {
+            display: none;
+        }
+
+        .stat-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            font-weight: 400;
+            color: var(--text-white);
+            display: block;
+            letter-spacing: 2px;
+        }
+
+        .stat-number .stat-suffix {
+            font-size: 1.5rem;
+            color: var(--primary-red);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        /* ============ SCROLL INDICATOR ============ */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            z-index: 10;
+            animation: fadeInUp 0.8s ease-out 1.2s both;
+        }
+
+        .scroll-indicator span {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .scroll-mouse {
+            width: 26px;
+            height: 42px;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-radius: 20px;
+            position: relative;
+        }
+
+        .scroll-wheel {
+            width: 4px;
+            height: 8px;
+            background: var(--primary-red);
+            border-radius: 2px;
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: scrollWheel 1.5s ease-in-out infinite;
+        }
+
+        @keyframes scrollWheel {
+            0%, 100% { opacity: 1; top: 8px; }
+            50% { opacity: 0.3; top: 20px; }
+        }
+
+        /* ============ RESPONSIVE DESIGN ============ */
+        @media (max-width: 1200px) {
+            .navbar { padding: 18px 40px; }
+            .nav-links { gap: 30px; }
+            .hero-stats { gap: 50px; }
+        }
+
+        @media (max-width: 992px) {
+            .navbar { padding: 15px 30px; }
+            .nav-links { gap: 20px; }
+            .logo-text { font-size: 2rem; letter-spacing: 4px; }
+            .hero-title { letter-spacing: 4px; }
+            .stat-number { font-size: 2.5rem; }
+            .hero-stats { gap: 35px; }
+            .stat-item::after { right: -18px; }
+        }
+
+        @media (max-width: 768px) {
+            .navbar { padding: 15px 20px; }
+            .nav-links, .nav-cta { display: none; }
+            .mobile-menu-btn { display: block; }
+            
+            .hero-content { padding: 0 20px; }
+            .hero-title { font-size: 2.8rem; letter-spacing: 3px; }
+            .hero-subtitle { font-size: 1rem; }
+            .hero-cta-group { flex-direction: column; align-items: center; }
+            .btn-primary, .btn-secondary { width: 100%; max-width: 300px; justify-content: center; }
+            
+            .hero-stats { 
+                flex-wrap: wrap; 
+                gap: 30px; 
+            }
+            .stat-item::after { display: none; }
+            .stat-number { font-size: 2rem; }
+            .stat-label { font-size: 0.75rem; letter-spacing: 2px; }
+            
+            .scroll-indicator { bottom: 25px; }
+        }
+
+        /* ============ TRENDING SECTION ============ */
+        .trending-section {
+            padding: 80px 60px;
+            background: var(--dark-bg);
+        }
+
+        .trending-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .trending-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            letter-spacing: 3px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .trending-title i {
+            color: var(--primary-red);
+        }
+
+        .view-all-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all var(--transition-fast);
+        }
+
+        .view-all-btn:hover {
+            color: var(--primary-red);
+            transform: translateX(5px);
+        }
+
+        .view-all-btn i {
+            transition: transform var(--transition-fast);
+        }
+
+        .view-all-btn:hover i {
+            transform: translateX(5px);
+        }
+
+        .trending-movies {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .trending-card {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all var(--transition-medium);
+        }
+
+        .trending-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(229, 9, 20, 0.3);
+        }
+
+        .trending-card-poster {
+            position: relative;
+            aspect-ratio: 2/3;
+        }
+
+        .trending-card-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--transition-medium);
+        }
+
+        .trending-card:hover .trending-card-poster img {
+            transform: scale(1.1);
+        }
+
+        .trending-card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.9) 100%);
+            opacity: 0;
+            transition: opacity var(--transition-medium);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 20px;
+        }
+
+        .trending-card:hover .trending-card-overlay {
+            opacity: 1;
+        }
+
+        .trending-play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: var(--primary-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: white;
+            opacity: 0;
+            transition: all var(--transition-medium);
+        }
+
+        .trending-card:hover .trending-play-btn {
+            opacity: 1;
+        }
+
+        .trending-card-info {
+            padding: 15px;
+            background: var(--dark-bg-secondary);
+        }
+
+        .trending-card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .trending-card-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.85rem;
+            color: var(--text-gray);
+        }
+
+        .trending-card-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #fbbf24;
+        }
+
+        .trending-card-rating i {
+            font-size: 0.75rem;
+        }
+
+        /* Loading state for trending */
+        .trending-loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 60px;
+            grid-column: 1 / -1;
+        }
+
+        .trending-loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: var(--primary-red);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .trending-movies { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .trending-section { padding: 50px 20px; }
+            .trending-movies { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+            .trending-title { font-size: 1.8rem; }
+        }
+
+        @media (max-width: 480px) {
+            .logo-text { font-size: 1.6rem; letter-spacing: 3px; }
+            .hero-badge { font-size: 0.7rem; padding: 8px 18px; }
+            .hero-title { font-size: 2.2rem; }
+            .hero-subtitle { font-size: 0.9rem; margin-bottom: 35px; }
+        }
+
+        /* ============ MOBILE MENU ============ */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 350px;
+            height: 100vh;
+            background: rgba(10, 10, 20, 0.98);
+            z-index: 2000;
+            padding: 80px 30px 30px;
+            transition: right var(--transition-medium);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.5);
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        .mobile-nav-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--text-white);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .mobile-nav-close:hover {
+            color: var(--primary-red);
+            transform: rotate(90deg);
+        }
+
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .mobile-nav-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: var(--text-light-gray);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all var(--transition-fast);
+        }
+
+        .mobile-nav-link:hover, .mobile-nav-link.active {
+            color: var(--primary-red);
+            transform: translateX(10px);
+        }
+
+        .mobile-nav-link i {
+            width: 25px;
+            text-align: center;
+        }
+
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-medium);
+        }
+
+        .mobile-nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <a href="hero-landing.html" class="logo">
+            <span class="logo-icon">
+                <i class="fas fa-film"></i>
+            </span>
+            <span class="logo-text">NOVARA</span>
+        </a>
+        
+        <ul class="nav-links">
+            <li><a href="hero-landing.html">Home</a></li>
+            <li><a href="movies.html">Movies</a></li>
+            <li><a href="#series">Series</a></li>
+            <li><a href="#originals">Originals</a></li>
+            <li><a href="#about">About</a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <button class="search-btn" aria-label="Search">
+                <i class="fas fa-search"></i>
+            </button>
+            <a href="#" class="nav-cta">Sign In</a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+    <div class="mobile-nav" id="mobileNav">
+        <button class="mobile-nav-close" id="mobileNavClose">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="mobile-nav-links">
+            <a href="hero-landing.html" class="mobile-nav-link active"><i class="fas fa-home"></i> Home</a>
+            <a href="movies.html" class="mobile-nav-link"><i class="fas fa-film"></i> Movies</a>
+            <a href="#series" class="mobile-nav-link"><i class="fas fa-tv"></i> Series</a>
+            <a href="#originals" class="mobile-nav-link"><i class="fas fa-star"></i> Originals</a>
+            <a href="#about" class="mobile-nav-link"><i class="fas fa-info-circle"></i> About</a>
+            <a href="#" class="mobile-nav-link"><i class="fas fa-sign-in-alt"></i> Sign In</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <!-- Background -->
+        <div class="hero-bg">
+            <img src="poster images/bac.png" alt="Background" class="hero-bg-image">
+            <div class="hero-bg-overlay"></div>
+        </div>
+
+        <!-- Ambient Orbs -->
+        <div class="ambient-orb orb-1"></div>
+        <div class="ambient-orb orb-2"></div>
+        <div class="ambient-orb orb-3"></div>
+
+        <!-- Lens Flare -->
+        <div class="lens-flare"></div>
+
+        <!-- Particle Canvas -->
+        <canvas id="particles-canvas"></canvas>
+
+        <!-- Content -->
+        <div class="hero-content">
+            <span class="hero-badge">
+                Now Streaming
+            </span>
+            
+            <h1 class="hero-title">
+                <span class="hero-title-main">Beyond The Universe</span>
+                <span class="hero-title-highlight">Of Movies</span>
+            </h1>
+            
+            <p class="hero-subtitle">
+                Experience cinema like never before. Stream thousands of blockbuster hits, 
+                exclusive originals, and timeless classics—all in stunning 4K quality. 
+                Your next favorite story awaits.
+            </p>
+
+            <div class="hero-cta-group">
+                <a href="movies.html" class="btn-primary">
+                    <i class="fas fa-play"></i>
+                    Start Watching Free
+                </a>
+                <a href="#trending" class="btn-secondary">
+                    <i class="fas fa-compass"></i>
+                    Explore Library
+                </a>
+            </div>
+
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">10K<span class="stat-suffix">+</span></span>
+                    <span class="stat-label">Movies</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">5K<span class="stat-suffix">+</span></span>
+                    <span class="stat-label">TV Shows</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">2M<span class="stat-suffix">+</span></span>
+                    <span class="stat-label">Users</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator" onclick="scrollToContent()">
+            <span>Scroll</span>
+            <div class="scroll-mouse">
+                <div class="scroll-wheel"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trending Section -->
+    <section class="trending-section" id="trending">
+        <div class="trending-header">
+            <h2 class="trending-title">
+                <i class="fas fa-fire"></i>
+                Trending Now
+            </h2>
+            <a href="movies.html" class="view-all-btn">
+                View All <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        <div class="trending-movies" id="trendingMovies">
+            <!-- Movies will be loaded here -->
+        </div>
+    </section>
+
+    <script>
+        // ============ PARTICLE SYSTEM ============
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        let particles = [];
+        const particleCount = 80;
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.opacity = Math.random() * 0.5 + 0.1;
+                this.color = Math.random() > 0.5 ? '255, 255, 255' : '229, 9, 20';
+            }
+            
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                
+                if (this.x < 0 || this.x > canvas.width || 
+                    this.y < 0 || this.y > canvas.height) {
+                    this.reset();
+                }
+            }
+            
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${this.color}, ${this.opacity})`;
+                ctx.fill();
+            }
+        }
+        
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+        
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+            
+            // Draw connections
+            particles.forEach((p1, i) => {
+                particles.slice(i + 1).forEach(p2 => {
+                    const dx = p1.x - p2.x;
+                    const dy = p1.y - p2.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 120) {
+                        ctx.beginPath();
+                        ctx.moveTo(p1.x, p1.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(229, 9, 20, ${0.15 * (1 - distance / 120)})`;
+                        ctx.stroke();
+                    }
+                });
+            });
+            
+            requestAnimationFrame(animateParticles);
+        }
+        
+        resizeCanvas();
+        initParticles();
+        animateParticles();
+        
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            initParticles();
+        });
+
+        // ============ NAVBAR SCROLL EFFECT ============
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 80) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // ============ MOBILE MENU ============
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+        const mobileNavClose = document.getElementById('mobileNavClose');
+
+        function openMobileMenu() {
+            mobileNav.classList.add('active');
+            mobileNavOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenu() {
+            mobileNav.classList.remove('active');
+            mobileNavOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        mobileMenuBtn.addEventListener('click', openMobileMenu);
+        mobileNavClose.addEventListener('click', closeMobileMenu);
+        mobileNavOverlay.addEventListener('click', closeMobileMenu);
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+
+        // ============ SMOOTH SCROLL ============
+        function scrollToContent() {
+            window.scrollTo({
+                top: window.innerHeight,
+                behavior: 'smooth'
+            });
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+
+    <!-- Trending Movies API -->
+    <script>
+        // API Configuration
+        const API_BASE = 'http://localhost:3000/api';
+        
+        // Fetch trending movies on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTrendingMovies();
+        });
+        
+        async function loadTrendingMovies() {
+            const container = document.getElementById('trendingMovies');
+            
+            // Show loading state
+            container.innerHTML = `
+                <div class="trending-loading">
+                    <div class="trending-loading-spinner"></div>
+                </div>
+            `;
+            
+            try {
+                const response = await fetch(`${API_BASE}/movies/trending`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    const movies = result.data.slice(0, 4); // Get only 4 movies
+                    renderTrendingMovies(movies);
+                } else {
+                    container.innerHTML = '<p style="color: var(--text-gray);">Failed to load trending movies</p>';
+                }
+            } catch (error) {
+                console.error('Error loading trending movies:', error);
+                container.innerHTML = '<p style="color: var(--text-gray);">Unable to connect to server</p>';
+            }
+        }
+        
+        function renderTrendingMovies(movies) {
+            const container = document.getElementById('trendingMovies');
+            
+            container.innerHTML = movies.map(movie => `
+                <div class="trending-card" onclick="window.location.href='movie-detail.html?id=${movie.id}'">
+                    <div class="trending-card-poster">
+                        <img src="${movie.poster}" alt="${movie.title}" loading="lazy">
+                        <div class="trending-card-overlay">
+                            <div class="trending-play-btn"><i class="fas fa-play"></i></div>
+                        </div>
+                    </div>
+                    <div class="trending-card-info">
+                        <h3 class="trending-card-title">${movie.title}</h3>
+                        <div class="trending-card-meta">
+                            <span>${movie.release_year}</span>
+                            <span class="trending-card-rating">
+                                <i class="fas fa-star"></i> ${movie.rating}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>
