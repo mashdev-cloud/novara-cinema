@@ -622,7 +622,7 @@
     </main>
 
     <script>
-        const API_BASE = 'http://localhost:3000/api';
+        // Using local movie data from script.js - no API needed for GitHub Pages
         let currentMovie = null;
 
         // Get movie ID from URL
@@ -640,20 +640,14 @@
                 return;
             }
 
-            try {
-                const response = await fetch(`${API_BASE}/movies/${movieId}`);
-                const result = await response.json();
-
-                if (result.success) {
-                    currentMovie = result.data;
-                    renderMovieDetails(currentMovie);
-                    loadSimilarMovies(currentMovie.genre, currentMovie.id);
-                } else {
-                    showError('Movie not found');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                showError('Unable to load movie details. Make sure the API is running.');
+            // Find movie in local data
+            currentMovie = movies.find(m => m.id == movieId);
+            
+            if (currentMovie) {
+                renderMovieDetails(currentMovie);
+                loadSimilarMovies(currentMovie.genre, currentMovie.id);
+            } else {
+                showError('Movie not found');
             }
         }
 
@@ -706,7 +700,7 @@
                             <h1 class="movie-title">${movie.title}</h1>
                             
                             <div class="movie-meta-row">
-                                <span class="movie-year">${movie.release_year}</span>
+                                <span class="movie-year">${movie.year}</span>
                                 <span class="movie-duration">
                                     <i class="fas fa-clock"></i> ${movie.duration}
                                 </span>
@@ -796,29 +790,21 @@
 
         // Load similar movies
         async function loadSimilarMovies(genres, excludeId) {
-            try {
-                const response = await fetch(`${API_BASE}/movies`);
-                const result = await response.json();
+            // Filter similar movies from local data
+            const similar = movies
+                .filter(m => m.id !== excludeId && m.genre.some(g => genres.includes(g)))
+                .slice(0, 6);
 
-                if (result.success) {
-                    const similar = result.data
-                        .filter(m => m.id !== excludeId && m.genre.some(g => genres.includes(g)))
-                        .slice(0, 6);
-
-                    const container = document.getElementById('similarMovies');
-                    container.innerHTML = similar.map(movie => `
-                        <div class="mini-movie-card" onclick="goToMovie(${movie.id})">
-                            <div class="mini-poster">
-                                <img src="${movie.poster}" alt="${movie.title}">
-                            </div>
-                            <div class="mini-title">${movie.title}</div>
-                            <div class="mini-meta">${movie.release_year} • ${movie.rating} ★</div>
-                        </div>
-                    `).join('');
-                }
-            } catch (error) {
-                console.error('Error loading similar movies:', error);
-            }
+            const container = document.getElementById('similarMovies');
+            container.innerHTML = similar.map(movie => `
+                <div class="mini-movie-card" onclick="goToMovie(${movie.id})">
+                    <div class="mini-poster">
+                        <img src="${movie.poster}" alt="${movie.title}">
+                    </div>
+                    <div class="mini-title">${movie.title}</div>
+                    <div class="mini-meta">${movie.year} • ${movie.rating} ★</div>
+                </div>
+            `).join('');
         }
 
         // Navigation functions
