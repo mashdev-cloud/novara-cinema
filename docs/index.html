@@ -1214,38 +1214,19 @@
 
     <!-- Trending Movies API -->
     <script>
-        // API Configuration
-        const API_BASE = 'http://localhost:3000/api';
+        // Using local movie data from script.js - no API needed for GitHub Pages
         
         // Fetch trending movies on page load
         document.addEventListener('DOMContentLoaded', () => {
             loadTrendingMovies();
         });
         
-        async function loadTrendingMovies() {
+        function loadTrendingMovies() {
             const container = document.getElementById('trendingMovies');
             
-            // Show loading state
-            container.innerHTML = `
-                <div class="trending-loading">
-                    <div class="trending-loading-spinner"></div>
-                </div>
-            `;
-            
-            try {
-                const response = await fetch(`${API_BASE}/movies/trending`);
-                const result = await response.json();
-                
-                if (result.success) {
-                    const movies = result.data.slice(0, 4); // Get only 4 movies
-                    renderTrendingMovies(movies);
-                } else {
-                    container.innerHTML = '<p style="color: var(--text-gray);">Failed to load trending movies</p>';
-                }
-            } catch (error) {
-                console.error('Error loading trending movies:', error);
-                container.innerHTML = '<p style="color: var(--text-gray);">Unable to connect to server</p>';
-            }
+            // Filter trending movies from local data
+            const trending = movies.filter(m => m.trending).slice(0, 4);
+            renderTrendingMovies(trending);
         }
         
         function renderTrendingMovies(movies) {
@@ -1262,7 +1243,7 @@
                     <div class="trending-card-info">
                         <h3 class="trending-card-title">${movie.title}</h3>
                         <div class="trending-card-meta">
-                            <span>${movie.release_year}</span>
+                            <span>${movie.year}</span>
                             <span class="trending-card-rating">
                                 <i class="fas fa-star"></i> ${movie.rating}
                             </span>
